@@ -28,7 +28,7 @@ public class Scope extends AbstractEntity {
         this.capasity = capasity;
     }
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "clients_id")
     public Client getClient() {
         return client;
