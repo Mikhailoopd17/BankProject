@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+    <form class="contact_form" action="/clients/new/add" method="post" name="contact_form">
+    <ul>
+        <li>
+            <h2>Форма добавления нового Заказчика</h2>
+            <span class="required_notification">* Обязательные поля</span>
+        </li>
+        <li>
+            <label> ФИО клиента </label>
+            <input th:for="${client.name}" type="text" name="name"  placeholder="Введите ФИО" required />
+        </li>
+        <li>
+            <label> Адрес </label>
+            <input th:for="${client.address}" type="text" name="address"  placeholder="Введите адрес" required />
+        </li>
+
+        <li>
+            <button class="submit" type="submit">Добавить в базу</button>
+        </li>
+    </ul>
+
+    </form>
+</body>
+</html>
