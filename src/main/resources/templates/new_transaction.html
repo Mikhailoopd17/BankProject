@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+    <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/new_tr/add'" method="post" name="contact_form">
+    <ul>
+        <li>
+            <h2>Перевод средств</h2>
+        </li>
+        <li>
+            <label> Выбранный счет </label>
+            <input type="text" name="name" th:value="${scope.name}" readonly/>
+        </li>
+
+        <li>
+            <label> Счет куда переводятся средства </label>
+            <select id="id_to" name="id_to">
+                <option th:each="scopeL : ${scope.getClient().getScopes()}" th:value="${scopeL.id}" th:text="${scopeL.name}"></option>
+            </select>
+        </li>
+        <li>
+            <label> Сумма </label>
+            <input th:for="${transaction.sum}" type="text" name="sum"  placeholder="Введите sum" required />
+        </li>
+
+        <li>
+            <button class="submit" type="submit">Перевести</button>
+        </li>
+    </ul>
+
+    </form>
+
+    <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/receipt'" method="post" name="contact_form">
+        <ul>
+            <li>
+                <h2>Пополнить карту</h2>
+            </li>
+            <li>
+                <label> Выбранный счет </label>
+                <input type="text" name="name" th:value="${scope.name}" readonly/>
+            </li>
+
+            <li>
+                <label> Сумма </label>
+                <input th:for="${transaction.sum}" type="text" name="sum"  placeholder="Введите sum" required />
+            </li>
+
+            <li>
+                <button class="submit" type="submit">Пополнить</button>
+            </li>
+        </ul>
+
+    </form>
+</body>
+</html>

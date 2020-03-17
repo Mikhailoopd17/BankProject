@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class ClientController {
 
@@ -24,7 +27,13 @@ public class ClientController {
 
     @GetMapping("/clients")
     public String clients(Model model){
-        model.addAttribute("clients", clientService.getAll());
+        List<Client> list = new ArrayList<>();
+        for (Client cl:clientService.getAll()) {
+            if(!cl.getName().toLowerCase().contains("bank") &&
+                    !cl.getName().toLowerCase().contains("shop"))
+                list.add(cl);
+        }
+        model.addAttribute("clients", list);
         model.addAttribute("new_client", new Client());
         return "clients";
     }

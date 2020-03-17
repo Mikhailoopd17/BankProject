@@ -5,15 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/some.css}">
-    <style>
-        table {width: 100%; border-collapse: collapse;}
-        table td {padding: 12px 16px;align-items: center}
-        table thead tr {font-weight: bold; border-top: 1px solid #e8e9eb; background: aquamarine}
-        table tr {border-bottom: 1px solid #e8e9eb;}
-        table tbody tr:hover {background: #e8f6ff;}
-    </style>
+
 </head>
 <body>
 <p th:text="${client.getId()}"></p>
@@ -21,38 +13,50 @@
 <p th:text="${client.getAddress()}"></p>
 
 <form class="contact_form" th:action="'/clients/'+${client.getId()}+'/newscope'" method="post" name="contact_form">
-    <label> Название счета </label>
-    <input th:for="${scope.name}" type="text" name="name" required />
-
-    <label> Валюта </label>
-    <select id="currency" name="currency">
-        <option value="Рубль">Рубль</option>
-        <option value="Доллар">Доллар</option>
-    </select>
-
-            <button class="submit" type="submit">Добавить в базу</button>
-
-
-<button class="submit" type="submit">Добавить счет</button>
+    <table>
+        <tr>
+            <td>
+                <label> Наименование счета   </label>
+                <input th:for="${scope.name}" type="text" name="name" required />
+            </td>
+            <td>
+                <label for="currency">Валюта</label>
+                <select id="currency" name="currency">
+                    <option value="Рубль">Рубль</option>
+                    <option value="Доллар">Доллар</option>
+                </select>
+            </td>
+            <td>
+                <button class="submit" type="submit">Добавить счет</button>
+            </td>
+        </tr>
+    </table>
 </form>
 
+
+
 <h3 align="right">Список счетов клиента</h3>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 <table>
-    <thead align="center">
+    <thead>
         <tr>
             <td >Номер счета</td>
             <td >Название</td>
+            <td >Валюта</td>
             <td >Сумма счета</td>
             <td >Операции</td>
         </tr>
     </thead>
     <tbody th:if="${!client.getScopes().isEmpty()}">
         <tr th:each="scope:${client.getScopes()}">
-            <td th:utext="${scope.getId()}"></td>
+            <td th:utext="${scope.formatId()}"></td>
             <td th:utext="${scope.getName()}"></td>
+            <td th:utext="${scope.getCurrency()}"></td>
             <td th:utext="${scope.getCapasity()}"></td>
             <td>
                 <a th:href="'/clients/'+${client.getId()}+'/scope='+${scope.getId()}+'/del'">Удалить</a>
+                <br>
+                <a th:href="'/scope='+${scope.getId()}+'/new_tr'">Пополнить</a>
             </td>
         </tr>
     </tbody>
@@ -60,6 +64,7 @@
         <tr>
             <td></td>
             <td>У клиента нет активных счетов</td>
+            <td></td>
             <td></td>
         </tr>
     </tbody>

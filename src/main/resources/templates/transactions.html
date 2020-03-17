@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 align="center">Список транзакций</h3>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<table>
+    <thead>
+    <tr>
+        <td>Номер транзакции</td>
+        <td>Тип транзакции</td>
+        <td>Сумма транзакции</td>
+        <td>Счет списания</td>
+        <td>Счет пополнения</td>
+        <td>Дата и время исполнения</td>
+    </tr>
+    </thead>
+    <tbody th:if="${!transactions.isEmpty()}">
+    <tr th:each="tr:${transactions}">
+        <td th:utext="${tr.formatId()}"></td>
+        <td th:utext="${tr.getType()}"></td>
+        <td th:utext="${tr.getSum()}"></td>
+        <td th:utext="${tr.getScopeAtTransaction().formatId()}"></td>
+        <td th:utext="${tr.getScopeToTransaction().formatId()}"></td>
+        <td th:utext="${tr.formatDate()}"></td>
+    </tr>
+    </tbody>
+    <tbody th:unless="${!transactions.isEmpty()}">
+    <tr>
+        <td></td>
+        <td>Транзазакции не выполнялись</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -37,7 +37,8 @@ public class ScopeController {
     @RequestMapping("/clients/{id}/scope={id_scope}/del")
     public RedirectView deleteScope(@PathVariable Long id,
                                     @PathVariable Long id_scope){
-        scopeService.delete(id_scope);
+        if(scopeService.getById(id_scope).getCapasity()==0)
+            scopeService.delete(id_scope);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl("/clients/"+id);
         return redirectView;

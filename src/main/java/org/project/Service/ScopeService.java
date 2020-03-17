@@ -22,4 +22,9 @@ public class ScopeService {
     public void delete(Long id){
         scopeRepository.deleteById(id);
     }
+
+    @Transactional
+    public Scope getById(Long id){
+        return scopeRepository.getOne(id);
+    }
 }

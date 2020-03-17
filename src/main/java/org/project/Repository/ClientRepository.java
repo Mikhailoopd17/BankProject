@@ -10,6 +10,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("from Client")
     Collection<Client> getAll();
 
+
 //    @Query("select cl from Client cl where cl.id = (#{id})")
 //    Client getClientById(Long id);
 }
