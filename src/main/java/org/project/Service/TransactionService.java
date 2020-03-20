@@ -22,7 +22,7 @@ public class TransactionService {
 
     @Transactional
     public List<Transaction> getAll(){
-        return transactionRepository.findAll();
+        return (List<Transaction>) transactionRepository.findAll();
     }
 
 }

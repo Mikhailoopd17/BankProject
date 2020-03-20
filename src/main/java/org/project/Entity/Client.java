@@ -1,16 +1,14 @@
 package org.project.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
 @Table(name = "clients")
-public class Client extends AbstractEntity {
-
+public class Client {
+    private Long id;
+    private String name;
     private String address;
     private Collection<Scope> scopes;
 
@@ -20,6 +18,23 @@ public class Client extends AbstractEntity {
     public Client(String name, String address) {
         this.name = name;
         this.address = address;
+    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {

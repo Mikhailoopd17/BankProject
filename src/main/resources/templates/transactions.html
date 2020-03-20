@@ -7,8 +7,58 @@
     <title>Title</title>
 </head>
 <body>
-<h3 align="center">Список транзакций</h3>
+<a href="/clients">Список клиентов</a>
+<a href="/transactions">Список транзакций</a>
+<h1 align="center">Список транзакций</h1>
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<form class="contact_form" action="/transactions/" method="post" name="contact_form">
+    <table>
+        <h2>Фильтр</h2>
+        <tr>
+            <td>
+                <label> № клиента соверщающего перевод </label>
+            </td>
+            <td>
+                <label> № клиента получателя </label>
+            </td>
+
+            <td>
+                <label> Дата совершения перевода (от) </label>
+            </td>
+
+            <td>
+                <label> Дата совершения перевода (до) </label>
+            </td>
+
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <input id="id_at" type="number" name="id_at" />
+            </td>
+            <td>
+                <input id="id_to" type="number" name="id_to"   />
+            </td>
+            <td>
+                <input id="date_f" type="date" name="date_f"   />
+            </td>
+            <td>
+                <input id="date_s" type="date" name="date_s"   />
+            </td>
+            <td>
+                <button class="submit" type="submit">Применить</button>
+            </td>
+            <td>
+                <form class="contact_form" action="/transactions" method="get" name="contact_form">
+                    <button class="submit" type="submit">Сбросить фильтр</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
 <table>
     <thead>
     <tr>

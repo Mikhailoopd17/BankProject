@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
+    <title>Детальная информация по клиенту</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script>
+        window.onload = function() {
+            var divs = document.querySelectorAll('.op + div'),
+                inp = document.querySelectorAll('[name="transfer"]'),
+                fn = function(input) {
+                    input.onclick = function() {
+                        Array.prototype.forEach.call(divs, function(div, i) {
+                            div.style.display = inp[i].checked ? "block" : "none"
+                        })
+                    }
+                };
+            Array.prototype.forEach.call(inp, fn);
+        }
+    </script>
 </head>
 <body>
-<p th:text="${client.getId()}"></p>
-<p th:text="${client.getName()}"></p>
-<p th:text="${client.getAddress()}"></p>
+<a href="/clients">Список клиентов</a>
+<a href="/transactions">Список транзакций</a>
+<h1 align="center" th:text="'Детальная информация по клиенту: '+${client.getName()}"></h1>
+<h2 align="center" th:text="'Адрес: '+${client.getAddress()}"></h2>
 
 <form class="contact_form" th:action="'/clients/'+${client.getId()}+'/newscope'" method="post" name="contact_form">
     <table>
@@ -32,11 +46,7 @@
         </tr>
     </table>
 </form>
-
-
-
-<h3 align="right">Список счетов клиента</h3>
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<h3 align="left">Список счетов клиента</h3>
 <table>
     <thead>
         <tr>
@@ -56,7 +66,104 @@
             <td>
                 <a th:href="'/clients/'+${client.getId()}+'/scope='+${scope.getId()}+'/del'">Удалить</a>
                 <br>
-                <a th:href="'/scope='+${scope.getId()}+'/new_tr'">Пополнить</a>
+                <a th:href="'/scope='+${scope.getId()}+'/new_tr'">Операции по счету</a>
+<!--                <a href="#zatemnenie">Перевести</a>-->
+<!--                <div id="zatemnenie">-->
+<!--                    <div id="okno">-->
+<!--                        <p class="op"><label><input name = "transfer" class="transfer" type = "radio"  value="1"/>Перевод между счетами клиента</label></p>-->
+<!--&lt;!&ndash;                        форма перевода между счетами клиента&ndash;&gt;-->
+<!--                        <div style="display: none">-->
+<!--                            <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/new_tr/add'" method="post" name="contact_form">-->
+<!--                                <h2 align="center">Перевод средств</h2>-->
+<!--                                <label for="name"> Выбранный счет </label>-->
+<!--                                <input id="name" type="text" name="name" th:value="${scope.getName()}" readonly/>-->
+
+<!--                                <label> Счет куда переводятся средства </label>-->
+<!--                                <select id="id_to" name="id_to">-->
+<!--                                    <option th:each="scopeL : ${client.getScopes()}" th:value="${scopeL.id}" th:text="${scopeL.name}"></option>-->
+<!--                                </select>-->
+
+<!--                                <label for="sum"> Сумма </label>-->
+<!--                                <input id="sum" type="text" name="sum"  placeholder="Введите sum" required />-->
+
+<!--                                <button class="submit" type="submit">Перевести</button>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <p class="op"><label><input name = "transfer" class="transfer" type = "radio"  value="2"/>Пополение счета</label></p>-->
+<!--&lt;!&ndash;                      форма пополнения&ndash;&gt;-->
+<!--                        <div style="display: none">-->
+<!--                            <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/receipt'" method="post" name="contact_form">-->
+<!--                                <h2>Пополнить карту</h2>-->
+
+<!--                                <label> Выбранный счет </label>-->
+<!--                                <input type="text" name="name" th:value="${scope.name}" readonly/>-->
+
+<!--                                <label> Сумма </label>-->
+<!--                                <input id="sum_rec" type="text" name="sum_rec"  placeholder="Введите sum" required />-->
+
+<!--                                <button class="submit" type="submit">Пополнить</button>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <p class="op"><label><input name = "transfer" class="transfer" type = "radio"  value="3"/>Пополение счета</label></p>-->
+<!--&lt;!&ndash;                        форма списания&ndash;&gt;-->
+<!--                        <div style="display: none">-->
+<!--                            <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/transfer'" method="post" name="contact_form">-->
+<!--                            <ul>-->
+<!--                                <li>-->
+<!--                                    <h2>Списать средства со счета</h2>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <label> Выбранный счет </label>-->
+<!--                                    <input type="text" name="name" th:value="${scope.name}" readonly/>-->
+<!--                                </li>-->
+
+<!--                                <li>-->
+<!--                                    <label> Сумма </label>-->
+<!--                                    <input id="sum_3" type="text" name="sum_3"  placeholder="Введите сумму перевода" required />-->
+<!--                                </li>-->
+
+<!--                                <li>-->
+<!--                                    <button class="submit" type="submit">Пополнить</button>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </form>-->
+<!--                        </div>-->
+<!--                        <p class="op"><label><input name = "transfer" class="transfer" type = "radio"  value="3"/>Пополение счета</label></p>-->
+<!--&lt;!&ndash;                    Форма перевода другому клиенту                       &ndash;&gt;-->
+<!--                        <div style="display: none">-->
+<!--                            <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/another_client'" method="post" name="contact_form">-->
+<!--                                <ul>-->
+<!--                                    <li>-->
+<!--                                        <h2>Перевод другому клиенту</h2>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <label> Выбранный счет </label>-->
+<!--                                        <input type="text" name="name" th:value="${scope.name}" readonly/>-->
+<!--                                    </li>-->
+
+<!--                                    <li>-->
+<!--                                        <label> Выберите клиента </label>-->
+<!--                                        <select id="id_client" name="id_client">-->
+<!--&lt;!&ndash;                                            <option th:each="clientI : ${clients}" th:value="${clientI.getId()}" th:text="${clientI.getName()}"></option>&ndash;&gt;-->
+<!--                                        </select>-->
+<!--                                    </li>-->
+<!--                                    <label> Введите номер счета клиента </label>-->
+<!--                                    <input type="text" name="id_to1" id="id_to1" placeholder="Введите sum" required />-->
+<!--                                    <li>-->
+<!--                                        <label> Сумма </label>-->
+<!--                                        <input id="sum_4" type="text" name="sum_4"  placeholder="Введите sum" required />-->
+<!--                                    </li>-->
+
+<!--                                    <li>-->
+<!--                                        <button class="submit" type="submit">Перевести</button>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <a href="#" class="">Закрыть окно</a>-->
+<!--                    </div>-->
+<!--                </div>-->
             </td>
         </tr>
     </tbody>
@@ -66,9 +173,9 @@
             <td>У клиента нет активных счетов</td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
     </tbody>
 </table>
-
 </body>
 </html>

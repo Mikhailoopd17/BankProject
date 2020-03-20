@@ -7,25 +7,27 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 <body>
+<a href="/clients">Список клиентов</a>
+<a href="/transactions">Список транзакций</a>
     <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/new_tr/add'" method="post" name="contact_form">
     <ul>
         <li>
-            <h2>Перевод средств</h2>
+            <h2>Перевод средств между счетами клиента</h2>
         </li>
         <li>
-            <label> Выбранный счет </label>
+            <label> Счет списания </label>
             <input type="text" name="name" th:value="${scope.name}" readonly/>
         </li>
 
         <li>
-            <label> Счет куда переводятся средства </label>
+            <label> Счет пополнения </label>
             <select id="id_to" name="id_to">
                 <option th:each="scopeL : ${scope.getClient().getScopes()}" th:value="${scopeL.id}" th:text="${scopeL.name}"></option>
             </select>
         </li>
         <li>
             <label> Сумма </label>
-            <input th:for="${transaction.sum}" type="text" name="sum"  placeholder="Введите sum" required />
+            <input th:for="${transaction.sum}" type="text" name="sum"  required />
         </li>
 
         <li>
@@ -38,7 +40,7 @@
     <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/receipt'" method="post" name="contact_form">
         <ul>
             <li>
-                <h2>Пополнить карту</h2>
+                <h2>Пополнить счет</h2>
             </li>
             <li>
                 <label> Выбранный счет </label>
@@ -55,6 +57,57 @@
             </li>
         </ul>
 
+    </form>
+
+    <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/transfer'" method="post" name="contact_form">
+        <ul>
+            <li>
+                <h2>Списать средства со счета</h2>
+            </li>
+            <li>
+                <label> Выбранный счет </label>
+                <input type="text" name="name" th:value="${scope.name}" readonly/>
+            </li>
+
+            <li>
+                <label> Сумма </label>
+                <input th:for="${transaction.sum}" type="text" name="sum"  placeholder="Введите sum" required />
+            </li>
+
+            <li>
+                <button class="submit" type="submit">Списать (покупка)</button>
+            </li>
+        </ul>
+
+    </form>
+
+    <form class="contact_form" th:action="'/scope='+${scope.getId()}+'/another_client'" method="post" name="contact_form">
+        <ul>
+            <li>
+                <h2>Перевод другому клиенту(по номеру счета)</h2>
+            </li>
+            <li>
+                <label> Выбранный счет </label>
+                <input type="text" name="name" th:value="${scope.name}" readonly/>
+            </li>
+
+            <li>
+                <label> Выберите клиента </label>
+                <select id="id_client" name="id_client">
+                    <option th:each="clientI : ${clients}" th:value="${clientI.getId()}" th:text="${clientI.getName()}"></option>
+                </select>
+            </li>
+            <label> Введите номер счета пополнения </label>
+                <input type="text" name="id_to1" id="id_to1" required />
+            <li>
+                <label> Сумма </label>
+                <input th:for="${transaction.sum}" type="text" name="sum"  required />
+            </li>
+
+            <li>
+                <button class="submit" type="submit">Перевести</button>
+            </li>
+        </ul>
     </form>
 </body>
 </html>

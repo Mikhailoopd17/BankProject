@@ -5,7 +5,9 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "scopes")
-public class Scope extends AbstractEntity {
+public class Scope {
+    private Long id;
+    private String name;
     private String currency;
     private Float capasity= 0f;
     private Client client;
@@ -20,10 +22,26 @@ public class Scope extends AbstractEntity {
     public Scope(String name, String currency, Client client) {
         this.name = name;
         this.currency = currency;
-        this.capasity = 5000000f;
+        this.capasity = 5000000f;//для создания магазинов и банкоматов
         this.client = client;
     }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getCurrency() {
         return currency;
@@ -51,7 +69,8 @@ public class Scope extends AbstractEntity {
         this.client = client;
     }
 
-    @OneToMany(mappedBy = "scopeAtTransaction", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "scopeAtTransaction", fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     public Collection<Transaction> getTransfers() {
         return transfers;
     }

@@ -25,6 +25,6 @@ public class ScopeService {
 
     @Transactional
     public Scope getById(Long id){
-        return scopeRepository.getOne(id);
+        return scopeRepository.findById(id).get();
     }
 }

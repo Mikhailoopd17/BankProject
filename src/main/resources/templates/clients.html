@@ -6,44 +6,62 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-
 </head>
 <body>
+<a href="/clients">Список клиентов</a>
+<a href="/transactions">Список транзакций</a>
 
-<div>
-    <ul>
-        <li>
-            <h2 align="center">Список всех клиентов</h2>
-        </li>
-        <li th:each="client:${clients}">
-            <a th:href="'/clients/'+${client.getId()}">
-                <label th:utext="${client}"></label>
+
+<h2 align="center">Список всех клиентов</h2>
+<table>
+    <thead>
+    <tr>
+        <td>Номер клиента</td>
+        <td>ФИО</td>
+        <td>Адрес</td>
+    </tr>
+    </thead>
+    <tbody th:if="${!clients.isEmpty()}">
+    <tr th:each="cl:${clients}">
+        <td th:utext="${cl.getId()}"></td>
+        <td>
+            <a th:href="'/clients/'+${cl.getId()}" th:text="${cl.getName()}">
+<!--                <label th:text="${cl.getName()}"></label>/-->
             </a>
-        </li>
-    </ul>
-</div>
+        </td>
+        <td th:utext="${cl.getAddress()}"></td>
+    </tr>
+    </tbody>
+    <tbody th:unless="${!clients.isEmpty()}">
+    <tr>
+        <td></td>
+        <td>Клиентов нет</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
 
-<div>
-    <form class="contact_form" action="/clients/new_client" method="post" name="contact_form">
-        <ul>
-            <li>
-                <h2>Форма добавления нового клиента</h2>
-                <span class="required_notification">* Обязательные поля</span>
-            </li>
-            <li>
+<form class="contact_form" action="/clients/new_client" method="post" name="contact_form">
+    <table>
+        <h2>Форма добавления нового клиента</h2>
+        <tr>
+            <td>
                 <label> ФИО клиента </label>
+            </td>
+            <td>
                 <input th:for="${new_client.name}" type="text" name="name"  placeholder="Введите ФИО" required />
-            </li>
-            <li>
+            </td>
+            <td>
                 <label> Адрес </label>
-                <input th:for="${new_client.address}" type="text" name="address"  placeholder="Введите адрес" required />
-            </li>
-
-            <li>
-                <button class="submit" type="submit">Добавить в базу</button>
-            </li>
-        </ul>
-    </form>
-</div>
+            </td>
+            <td>
+                <input th:for="${new_client.address}" type="text" maxlength="200" name="address"  placeholder="Введите адрес" required />
+            </td>
+            <td>
+                <button class="submit" type="submit">Добавить клиента</button>
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
