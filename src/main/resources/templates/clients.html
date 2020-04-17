@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 </head>
 <body>
+<div>
+    <p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</p>
+    <form action="/logout" method="post">
+        <input type="submit" value="Выход"/>
+    </form>
+</div>
 <a href="/clients">Список клиентов</a>
 <a href="/transactions">Список транзакций</a>
 

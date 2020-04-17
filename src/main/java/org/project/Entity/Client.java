@@ -6,9 +6,8 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "clients")
-public class Client {
-    private Long id;
-    private String name;
+public class Client extends APerson {
+
     private String address;
     private Collection<Scope> scopes;
 
@@ -19,23 +18,7 @@ public class Client {
         this.name = name;
         this.address = address;
     }
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getAddress() {
         return address;

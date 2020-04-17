@@ -22,9 +22,9 @@ import java.util.Random;
 
 @Controller
 public class TransactionController {
-    final TransactionService transactionService;
-    final ScopeService scopeService;
-    final ClientService clientService;
+    private final TransactionService transactionService;
+    private final ScopeService scopeService;
+    private final ClientService clientService;
 
     public TransactionController(TransactionService transactionService, ScopeService scopeService, ClientService clientService) {
         this.transactionService = transactionService;
